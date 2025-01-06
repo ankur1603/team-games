@@ -13,6 +13,7 @@ const PlayerState = (props) => {
     const [state, setState] = useState(!isLoggedIn ? player:storedPlayer);
     const update = (value, attr) => {
         state[attr] = value;
+        setState(state);
         localStorage.setItem('player', JSON.stringify(state));
     }
 

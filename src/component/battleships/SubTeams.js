@@ -4,6 +4,7 @@ import playerContext from "../../context/PlayerContext";
 import { useContext } from "react";
 import Modal from "../Modal";
 import GameBoard from "./GameBoard";
+import SubTeamPlayerList from './SubTeamPlayerList';
 
 export default function SubTeams(props) {
     const battleshipContext = useContext(bsContext);  
@@ -23,30 +24,7 @@ export default function SubTeams(props) {
     <div className="container text-center">
         <div className="row">
           <div className="col">
-            <div
-              className="container d-flex justify-content-evenly mt-4 text-bg-light p-3 rounded border"
-              data-bs-theme="dark"
-              style={{ height: "80vh" }}
-            >
-              <div className="componentWrapper">
-                <div className="header">Team1 Players</div>
-                <p className="mb-0">
-                  {team1Players.map((player, index) => {
-                    if(playerName === player){
-                      playerUpdate("team1", "subTeamName");
-                    }
-                    return (
-                      <h4><span
-                        key={index}
-                        className="badge rounded-pill text-bg-primary mx-1"
-                      >
-                        {player}
-                      </span></h4>
-                    );
-                  })}
-                </p>
-              </div>
-            </div>
+            <SubTeamPlayerList players={team1Players} heading="Team1 Players"/>
           </div>
           <div className="col">
           <div className="mt-5 mb-5">
@@ -57,14 +35,14 @@ export default function SubTeams(props) {
             needAcceptBtn={role == "admin"}
             acceptLabel="Finish Game!"
             confirmFunc={props.handleFinishGame} 
-            body={<GameBoard client={props.client}/>} />
+            body={<GameBoard client={props.client} showAlert={props.showAlert}/>} />
 
             <Modal id="strategicBoard" title={`${(playerState.subTeamName || "").toUpperCase()} Strategic Board`}
             needRejectBtn={false}
             triggerButtonLabel="PlaceShips"
             triggerButtonType="success"
             acceptLabel="Ready"
-            body={<GameBoard client={props.client}/>} />
+            body={<GameBoard client={props.client} showAlert={props.showAlert}/>} />
           </div>
           <div className="mt-5">
             <img src="versus.jpeg"/>
@@ -93,30 +71,7 @@ export default function SubTeams(props) {
 }
           </div>
           <div className="col">
-            <div
-              className="container d-flex justify-content-evenly mt-4 text-bg-light p-3 rounded border"
-              data-bs-theme="dark"
-              style={{ height: "80vh" }}
-            >
-              <div className="componentWrapper">
-                <div className="header">Team2 Players</div>
-                <p className="mb-0">
-                  {team2Players.map((player, index) => {
-                    if(playerName === player){
-                      playerUpdate("team2", "subTeamName");
-                    }
-                    return (
-                      <h4><span
-                        key={index}
-                        className="badge rounded-pill text-bg-primary mx-1"
-                      >
-                        {player}
-                      </span></h4>
-                    );
-                  })}
-                </p>
-              </div>
-            </div>
+          <SubTeamPlayerList players={team2Players} heading="Team2 Players"/>
           </div>
         </div>
       </div>

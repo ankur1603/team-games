@@ -36,6 +36,7 @@ export default function LoginScreen(props) {
                   type="text"
                   placeholder="Enter your Team name"
                   defaultValue={playerState.teamName}
+                  tabindex="1"
                   onChange={(e) => playerUpdate(e.target.value.trim(),'teamName')}
                 />
               </li>
@@ -44,6 +45,7 @@ export default function LoginScreen(props) {
                   type="text"
                   placeholder="Enter your name"
                   defaultValue={playerState.name}
+                  tabindex="2"
                   onChange={(e) => playerUpdate(e.target.value.trim(), 'name')}
                 />
               </li>
@@ -56,6 +58,7 @@ export default function LoginScreen(props) {
 
           <button type="button" 
                 className="btn btn-success"
+                tabindex="3"
                 onClick={handleClick}>
                   Let the fun begin!!
                 </button>

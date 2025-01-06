@@ -72,6 +72,7 @@ const BSState = (props) => {
         updateTeam1Players([]);
         updateTeam2Players([]);
         updateScore(0);
+        updateOpponentScore(0);
     }
     return (
         <BSContext.Provider value={{

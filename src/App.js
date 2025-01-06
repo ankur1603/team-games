@@ -36,7 +36,7 @@ function App() {
         <Routes>
         <Route path="/" element={playerState==null || playerState.name==null || playerState.name == "" ? <LoginScreen showAlert={showAlert}/> : <Home/>}/>
         <Route path="/home" element={<Home/>}/>
-        <Route path="/battleships" element={<BSState><BSLobby/></BSState>}/>
+        <Route path="/battleships" element={<BSState><BSLobby showAlert={showAlert}/></BSState>}/>
         </Routes>
       </Router>
     </>

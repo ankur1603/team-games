@@ -11,7 +11,7 @@ export const SockJSClient = (playerState) => {
           brokerURL: null, // Use null for SockJS
           webSocketFactory: () => new SockJS("https://team-games-backend-92069822177.asia-southeast1.run.app/team-games"), // Replace with your SockJS URL
           reconnectDelay: 5000,
-          heartbeatIncoming: 10000,
+          heartbeatIncoming: 15000,
           connectHeaders: {
             'playerName': playerName,
             'teamName': teamName
