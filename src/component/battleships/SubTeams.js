@@ -50,20 +50,20 @@ export default function SubTeams(props) {
           {role == "admin" ? 
           <>
           <div className="mt-5">
-          <Modal id="endGame" title="End Game?" 
-                  body={`Are you sure you want to end the game with Team ${teamName} ?`} 
-                  confirmFunc={props.handleEndGame} 
-                  acceptLabel="Yes"
-                  triggerButtonLabel="End Game"
-                  />
-          </div>
-          <div className="mt-5">
           <Modal id="startGame" title="Start Game?" 
                   body={`Are you sure you want to start the game with Team ${teamName} ?`} 
                   confirmFunc={props.handleStartGame} 
                   acceptLabel="Yes"
                   triggerButtonType="success"
                   triggerButtonLabel="Start Game"
+                  />
+          </div>
+          <div className="mt-5">
+          <Modal id="endGame" title="End Game?" 
+                  body={`Are you sure you want to end the game with Team ${teamName} ?`} 
+                  confirmFunc={props.handleEndGame} 
+                  acceptLabel="Yes"
+                  triggerButtonLabel="End Game"
                   />
           </div>
           </>

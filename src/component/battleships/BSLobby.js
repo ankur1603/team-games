@@ -30,8 +30,8 @@ function BSLobby(props) {
   const showAlert = props.showAlert;
   const playerName = playerState.name;
   const teamName = playerState.teamName;
-  const role = playerState.role;
-  const playerSubTeam = playerState.subTeamName;
+  let role = playerState.role;
+  let playerSubTeam = playerState.subTeamName;
 
   let navigate = useNavigate();
   const TOPIC = "/topic/" + teamName; // Replace with your topic
@@ -47,6 +47,7 @@ function BSLobby(props) {
         if (type == "ADMIN") {
           if (playerName == payload) {
             playerUpdate("admin", "role");
+            role = "admin";
           }
         } else if (type == "PLAYERS") {
           updateTeamPlayers(payload);
@@ -81,6 +82,7 @@ function BSLobby(props) {
         if (type == "PLAYERS") {
           if (payload.includes(playerName)) {
             playerUpdate("team1", "subTeamName");
+            playerSubTeam = "team1";
           }
           updateTeam1Players(payload);
         }
@@ -112,6 +114,7 @@ function BSLobby(props) {
         if (type == "PLAYERS") {
           if (payload.includes(playerName)) {
             playerUpdate("team2", "subTeamName");
+            playerSubTeam = "team2";
           }
           updateTeam2Players(payload);
         }

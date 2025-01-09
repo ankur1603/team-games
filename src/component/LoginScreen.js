@@ -1,23 +1,27 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
 
-import { useContext, useEffect } from 'react';
+import { useContext, useRef } from 'react';
 import playerContext from "../context/PlayerContext"
 
 export default function LoginScreen(props) {
   const player = useContext(playerContext)
-  let playerState = player.state;
-  let playerUpdate = player.update;
-  let navigate = useNavigate();
+  const playerState = player.state;
+  const playerUpdate = player.update;
+
+  const refName = useRef();
+  const refTeamName = useRef();
 
   const handleClick = () => {
-    if(playerState.teamName == null || playerState.teamName === ""){
+    const name = refName.current.value.trim();
+    const teamName = refTeamName.current.value.trim();
+    if(teamName == null || teamName === ""){
       props.showAlert("Please enter your Team name","warning") 
     }
-    else if(playerState.name ==null || playerState.name === ""){
+    else if(name ==null || name === ""){
       props.showAlert("Please enter your name","warning") 
     } else {
-      navigate('/home')
+      playerUpdate(name, 'name');
+      playerUpdate(teamName, 'teamName');
     }
 
   };
@@ -37,7 +41,7 @@ export default function LoginScreen(props) {
                   placeholder="Enter your Team name"
                   defaultValue={playerState.teamName}
                   tabindex="1"
-                  onChange={(e) => playerUpdate(e.target.value.trim(),'teamName')}
+                  ref={refTeamName}
                 />
               </li>
               <li className="list-group-item">
@@ -46,7 +50,7 @@ export default function LoginScreen(props) {
                   placeholder="Enter your name"
                   defaultValue={playerState.name}
                   tabindex="2"
-                  onChange={(e) => playerUpdate(e.target.value.trim(), 'name')}
+                  ref={refName}
                 />
               </li>
               <li className="list-group-item">

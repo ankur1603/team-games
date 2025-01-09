@@ -68,7 +68,7 @@ export default function AboutBattleShips(props) {
     </p>
     </div>
     <div className="col-6">
-    <img src="BattleShips1.jpeg" alt="BattleShips" className="img-fluid border rounded"  style={{ height: "75vh" }} />
+    <img src="BattleShips1.jpeg" alt="BattleShips" className="img-fluid border border-success rounded"  style={{ height: "76vh" }} />
     </div>
     
   </div>

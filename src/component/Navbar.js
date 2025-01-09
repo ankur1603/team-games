@@ -5,18 +5,13 @@ import playerContext from "../context/PlayerContext"
 import Modal from './Modal';
 export default function Navbar(props) {
   const player = useContext(playerContext)
-  let playerState = player.state;
+  const playerState = player.state;
+  const resetPlayer = player.resetPlayer;
   let navigate = useNavigate();
 
   const confirmLogout = (e) => {
     e.preventDefault();
-    player.setState({
-      "name": null,
-      "teamName": null,
-      "subTeamName": "",
-      "role": ""
-    })
-    localStorage.setItem('player', JSON.stringify(player));
+    resetPlayer();
     navigate('/')
   }
 
@@ -41,6 +36,7 @@ export default function Navbar(props) {
               confirmFunc={confirmLogout} 
               acceptLabel="Yes"
               triggerButtonLabel="Logout"
+              triggerButtonType="danger"
               />
             </span>
           </div>
