@@ -2,9 +2,9 @@ import BSContext from "./BSContext"
 import {useState} from "react";
 
 const BSState = (props) => {
-    const fromLocalStorageOrDefault= (key, defaultValue) => {
+    const fromLocalStorageOrDefault= (key, defaultValue,parse=true) => {
         return localStorage.getItem(key)===null || localStorage.getItem(key) === "undefined" 
-        ? defaultValue: JSON.parse(localStorage.getItem(key))
+        ? defaultValue: parse ? JSON.parse(localStorage.getItem(key)) : localStorage.getItem(key);
     }
 
     const [teamPlayers, setTeamPlayers] = useState(fromLocalStorageOrDefault('teamPlayers',[]));
@@ -65,6 +65,12 @@ const BSState = (props) => {
         localStorage.setItem('opponentScore', newScore);
     }
 
+    const [turn, setTurn] = useState(fromLocalStorageOrDefault('turn', 'team1', false));
+    const updateTurn = (newTurn) => {
+        setTurn(newTurn);
+        localStorage.setItem('turn', newTurn);
+    }
+
     const resetAll = () => {
         updateMatrix(defaultMatrix);
         updateGameStarted(false);
@@ -73,6 +79,7 @@ const BSState = (props) => {
         updateTeam2Players([]);
         updateScore(0);
         updateOpponentScore(0);
+        updateTurn('team1');
     }
     return (
         <BSContext.Provider value={{
@@ -93,6 +100,8 @@ const BSState = (props) => {
             updateScore,
             opponentScore,
             updateOpponentScore,
+            turn,
+            updateTurn,
             resetAll}}>
             {props.children}
         </BSContext.Provider>

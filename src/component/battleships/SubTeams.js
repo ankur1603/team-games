@@ -10,6 +10,7 @@ export default function SubTeams(props) {
     const battleshipContext = useContext(bsContext);  
     const team1Players = battleshipContext.team1Players;
     const team2Players = battleshipContext.team2Players;
+    const turn = battleshipContext.turn;
     const score = battleshipContext.score;
     const player = useContext(playerContext);
     const playerState = player.state;
@@ -29,7 +30,7 @@ export default function SubTeams(props) {
           <div className="col">
           <div className="mt-5 mb-5">
             
-            <Modal id="gameBoard" title={`${(playerState.subTeamName || "").toUpperCase()} Game Board - Score: ${score}`}
+            <Modal id="gameBoard" title={`${(playerState.subTeamName || "").toUpperCase()} Game Board - Score: ${score} - Turn: ${(turn || "").toUpperCase()}`}
             triggerButton={false}
             needRejectBtn={false}
             needAcceptBtn={role == "admin"}

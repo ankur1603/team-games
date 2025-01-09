@@ -21,9 +21,12 @@ function BSLobby(props) {
   const updateTeamSplitDone = battleshipContext.updateTeamSplitDone;
   const updateGameStarted = battleshipContext.updateGameStarted;
   const refreshMatrix = battleshipContext.refreshMatrix;
+  const matrix = battleshipContext.matrix;
   const resetAll = battleshipContext.resetAll;
   const updateScore = battleshipContext.updateScore;
   const updateOpponentScore = battleshipContext.updateOpponentScore;
+  const updateTurn = battleshipContext.updateTurn;
+
   const player = useContext(playerContext);
   const playerState = player.state;
   const playerUpdate = player.update;
@@ -35,6 +38,32 @@ function BSLobby(props) {
 
   let navigate = useNavigate();
   const TOPIC = "/topic/" + teamName; // Replace with your topic
+  const getUpdatedCellValueForSelf = (hit_miss_val, payload) => {
+    if (hit_miss_val === 'empty' && payload === 'hit') {
+      return 'hit';
+    } else if (hit_miss_val === 'empty' && payload === 'miss') {
+      return 'miss';
+    } else if (hit_miss_val === 'destroyed' && payload === 'hit') {
+      return 'destroyed_hit';
+    } else if (hit_miss_val === 'destroyed' && payload === 'miss') {
+      return 'destroyed_miss';
+    } else {
+      return hit_miss_val; // Retain the existing value
+    }
+  };
+
+  const getUpdatedCellValueForOpponent = (hit_miss_val, payload) => {
+    if (hit_miss_val === 'empty' && payload === 'hit') {
+      return 'destroyed';
+    } else if (hit_miss_val === 'hit' && payload === 'hit') {
+      return 'destroyed_hit';
+    } else if (hit_miss_val === 'miss' && payload === 'hit') {
+      return 'destroyed_miss';
+    } else {
+      return hit_miss_val; // Retain the existing value
+    }
+  };
+
   useEffect(() => {
     const client = SockJSClient(playerState);
     setClient(client);
@@ -46,9 +75,11 @@ function BSLobby(props) {
         const payload = jsonObj.payload;
         if (type == "ADMIN") {
           if (playerName == payload) {
-            playerUpdate("admin", "role");
             role = "admin";
+          } else {
+            role = "player";
           }
+          playerUpdate(role, "role");
         } else if (type == "PLAYERS") {
           updateTeamPlayers(payload);
         } else if (type == "TEAM_SPLIT_DONE") {
@@ -72,6 +103,8 @@ function BSLobby(props) {
             document.getElementById("gameBoard")
           );
           gameBoard.show();
+        } else if (type == 'TURN'){
+          updateTurn(payload);
         }
       });
       client.subscribe(TOPIC + "/team1", (message) => {
@@ -90,18 +123,19 @@ function BSLobby(props) {
           const row = jsonObj.row;
           const column = jsonObj.column;
           const score = jsonObj.score;
+          let hit_miss_val = (matrix[row][column]).hit_miss;
           if (type == "DEPLOY") {
             refreshMatrix(row, column, "ours", payload);
           } else if (type == "MARK_SELF") {
             updateScore(score);
-            refreshMatrix(row, column, "hit_miss", payload);
+            refreshMatrix(row, column, "hit_miss", getUpdatedCellValueForSelf(hit_miss_val,payload));
           } else if (type == "MARK_OPPONENT") {
             updateOpponentScore(score);
             refreshMatrix(
               row,
               column,
               "hit_miss",
-              payload == "hit" ? "destroyed" : ""
+              getUpdatedCellValueForOpponent(hit_miss_val, payload)
             );
           }
         }
@@ -122,20 +156,21 @@ function BSLobby(props) {
           const row = jsonObj.row;
           const column = jsonObj.column;
           const score = jsonObj.score;
+          let hit_miss_val = (matrix[row][column]).hit_miss;
           if (type == "DEPLOY") {
             const row = jsonObj.row;
             const column = jsonObj.column;
             refreshMatrix(row, column, "ours", payload);
           } else if (type == "MARK_SELF") {
             updateScore(score);
-            refreshMatrix(row, column, "hit_miss", payload);
+            refreshMatrix(row, column, "hit_miss", getUpdatedCellValueForSelf(hit_miss_val,payload));
           } else if (type == "MARK_OPPONENT") {
             updateOpponentScore(score);
             refreshMatrix(
               row,
               column,
               "hit_miss",
-              payload == "hit" ? "destroyed" : ""
+              getUpdatedCellValueForOpponent(hit_miss_val, payload)
             );
           }
         }

@@ -9,6 +9,7 @@ const GameBoard = (props) => {
   const matrix = battleshipContext.matrix;
   const gameStarted = battleshipContext.gameStarted;
   const size = battleshipContext.size;
+  const turn = battleshipContext.turn;
   const client = props.client;
   const [selectedShipColor, setSelectedShipColor] = useState("#007bff");
 
@@ -50,7 +51,7 @@ const GameBoard = (props) => {
   };
 
   const handleDoubleClick = (row, col, event) => {
-    if (gameStarted == true) {
+    if (gameStarted == true && turn == subTeamName) {
       if (client && client.connected) {
         client.publish({
           destination: "/app/attackShip", // Destination to send the message
@@ -114,6 +115,10 @@ const GameBoard = (props) => {
                   ? "🔘"
                   : cell["hit_miss"] == "destroyed"
                   ? "🔥"
+                  : cell["hit_miss"] == "destroyed_hit"
+                  ? "❌🔥"
+                  : cell["hit_miss"] == "destroyed_miss"
+                  ? "🔥🔘"
                   : `${rowIndex}${colIndex}`}
               </div>
             ))
