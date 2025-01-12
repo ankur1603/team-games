@@ -205,6 +205,13 @@ function BSLobby(props) {
             teamName: teamName,
           }),
         });
+        client.publish({
+          destination: "/app/turn", // Destination to send the message
+          body: JSON.stringify({
+            type: "TURN",
+            teamName: teamName,
+          }),
+        });
       } else {
         showAlert(
           "Oops!! Unable to connect with the backend service. Please try again in sometime!",
