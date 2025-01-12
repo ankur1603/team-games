@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ShipLegend from "./ShipLegend";
 import bsContext from "./context/BSContext";
 import playerContext from "../../context/PlayerContext";
 import GameLegend from "./GameLegend";
+import { toast } from 'react-toastify';
 
 const GameBoard = (props) => {
   const battleshipContext = useContext(bsContext);
@@ -51,7 +52,8 @@ const GameBoard = (props) => {
   };
 
   const handleDoubleClick = (row, col, event) => {
-    if (gameStarted == true && turn == subTeamName) {
+    if (gameStarted == true) {
+      if(turn == subTeamName) {
       if (client && client.connected) {
         client.publish({
           destination: "/app/attackShip", // Destination to send the message
@@ -71,6 +73,9 @@ const GameBoard = (props) => {
           "danger"
         );
       }
+    } else {
+      toast.error("Maintain discipline; you’re not on the attack roster!");
+    }
     }
   };
 
@@ -78,11 +83,17 @@ const GameBoard = (props) => {
     <>
       <div>
         {gameStarted == true ? (
+          <>
           <GameLegend />
+          <h5 className="text-light bg-secondary">Double Click cells to strike</h5>
+          </>
         ) : (
+          <>
           <ShipLegend updateColorSelection={setSelectedShipColor} />
+          <h5 className="text-light bg-secondary">Click cells to deploy your ships</h5>
+          </>
         )}
-        <h3>Click cells to mark/unmark them</h3>
+        
         <div
           style={{
             display: "grid",

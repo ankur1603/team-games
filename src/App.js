@@ -13,6 +13,9 @@ import PlayerState from './context/PlayerState';
 import playerContext from "./context/PlayerContext"
 import BSLobby from './component/battleships/BSLobby';
 import BSState from './component/battleships/context/BSState';
+import { ToastContainer, Bounce } from 'react-toastify';
+
+
 function App() {
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
@@ -31,6 +34,20 @@ function App() {
     <>
       <Router>
         <Alert alert={alert}/>
+        <ToastContainer 
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Bounce}
+        />
+
         <Navbar title="Team-Games"/>
 
         <Routes>

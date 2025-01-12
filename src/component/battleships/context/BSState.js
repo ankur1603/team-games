@@ -77,9 +77,12 @@ const BSState = (props) => {
         updateTeamSplitDone(false);
         updateTeam1Players([]);
         updateTeam2Players([]);
+        updateMatrix(defaultMatrix);
         updateScore(0);
         updateOpponentScore(0);
         updateTurn('team1');
+        updateGameStarted(false);
+        updateTeamSplitDone(false);
     }
     return (
         <BSContext.Provider value={{

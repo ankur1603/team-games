@@ -3,17 +3,17 @@ import React from "react";
 export default function AboutBattleShips(props) {
   return (
     <>
-<div class="card text-center mt-2 mb-2 container">
-  <div class="card-body row">
+<div className="card text-center mt-2 mb-2 container">
+  <div className="card-body row">
     <div className="text-start col-6">
-    <p class="card-text">
+    <p className="card-text">
     <p>
       <strong>⛴ Battleships ⛴</strong> is a classic strategy game played between two
       teams. The objective is to sink all the opponent’s ships before they
       sink yours. The game involves a combination of planning, guessing, and a
       bit of luck.
     </p>
-    <h2 class="text-secondary mt-4 fluid">Gameplay:</h2>
+    <h2 className="text-secondary mt-4 fluid">Gameplay:</h2>
     <ol>
       <li>
         <strong>Setup:</strong>
@@ -72,7 +72,7 @@ export default function AboutBattleShips(props) {
     </div>
     
   </div>
-  <div class="text-body-secondary">
+  <div className="text-body-secondary">
   <div className="row">
           <div className="col">
 

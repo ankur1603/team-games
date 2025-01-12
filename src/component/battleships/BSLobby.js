@@ -8,6 +8,7 @@ import AboutBattleShips from "./AboutBattleShips";
 import SubTeams from "./SubTeams";
 import GameEnd from "./GameEnd";
 import Modal from "../Modal";
+import { toast } from "react-toastify";
 
 function BSLobby(props) {
   const [client, setClient] = useState(null);
@@ -39,26 +40,26 @@ function BSLobby(props) {
   let navigate = useNavigate();
   const TOPIC = "/topic/" + teamName; // Replace with your topic
   const getUpdatedCellValueForSelf = (hit_miss_val, payload) => {
-    if (hit_miss_val === 'empty' && payload === 'hit') {
-      return 'hit';
-    } else if (hit_miss_val === 'empty' && payload === 'miss') {
-      return 'miss';
-    } else if (hit_miss_val === 'destroyed' && payload === 'hit') {
-      return 'destroyed_hit';
-    } else if (hit_miss_val === 'destroyed' && payload === 'miss') {
-      return 'destroyed_miss';
+    if (hit_miss_val === "empty" && payload === "hit") {
+      return "hit";
+    } else if (hit_miss_val === "empty" && payload === "miss") {
+      return "miss";
+    } else if (hit_miss_val === "destroyed" && payload === "hit") {
+      return "destroyed_hit";
+    } else if (hit_miss_val === "destroyed" && payload === "miss") {
+      return "destroyed_miss";
     } else {
       return hit_miss_val; // Retain the existing value
     }
   };
 
   const getUpdatedCellValueForOpponent = (hit_miss_val, payload) => {
-    if (hit_miss_val === 'empty' && payload === 'hit') {
-      return 'destroyed';
-    } else if (hit_miss_val === 'hit' && payload === 'hit') {
-      return 'destroyed_hit';
-    } else if (hit_miss_val === 'miss' && payload === 'hit') {
-      return 'destroyed_miss';
+    if (hit_miss_val === "empty" && payload === "hit") {
+      return "destroyed";
+    } else if (hit_miss_val === "hit" && payload === "hit") {
+      return "destroyed_hit";
+    } else if (hit_miss_val === "miss" && payload === "hit") {
+      return "destroyed_miss";
     } else {
       return hit_miss_val; // Retain the existing value
     }
@@ -85,7 +86,7 @@ function BSLobby(props) {
         } else if (type == "TEAM_SPLIT_DONE") {
           updateTeamSplitDone(true);
         } else if (type == "END_GAME") {
-          const gameBoard = new window.bootstrap.Modal(
+          const gameBoard = window.bootstrap.Modal.getInstance(
             document.getElementById("gameBoard")
           );
           gameBoard.hide();
@@ -94,16 +95,26 @@ function BSLobby(props) {
           );
           gameResult.show();
         } else if (type == "START_GAME") {
-          const strategicBoard = new window.bootstrap.Modal(
+          client.publish({
+            destination: "/app/turn", // Destination to send the message
+            body: JSON.stringify({
+              type: "TURN",
+              teamName: teamName,
+            }),
+          });
+          const strategicBoard = window.bootstrap.Modal.getInstance(
             document.getElementById("strategicBoard")
           );
           strategicBoard.hide();
           updateGameStarted(true);
-          const gameBoard = new window.bootstrap.Modal(
+          const gameBoard = window.bootstrap.Modal.getInstance(
             document.getElementById("gameBoard")
           );
           gameBoard.show();
-        } else if (type == 'TURN'){
+          toast.success(
+            "Game Started, Launch the first strike!"
+          );
+        } else if (type == "TURN") {
           updateTurn(payload);
         }
       });
@@ -123,12 +134,17 @@ function BSLobby(props) {
           const row = jsonObj.row;
           const column = jsonObj.column;
           const score = jsonObj.score;
-          let hit_miss_val = (matrix[row][column]).hit_miss;
+          let hit_miss_val = matrix[row][column].hit_miss;
           if (type == "DEPLOY") {
             refreshMatrix(row, column, "ours", payload);
           } else if (type == "MARK_SELF") {
             updateScore(score);
-            refreshMatrix(row, column, "hit_miss", getUpdatedCellValueForSelf(hit_miss_val,payload));
+            refreshMatrix(
+              row,
+              column,
+              "hit_miss",
+              getUpdatedCellValueForSelf(hit_miss_val, payload)
+            );
           } else if (type == "MARK_OPPONENT") {
             updateOpponentScore(score);
             refreshMatrix(
@@ -156,14 +172,19 @@ function BSLobby(props) {
           const row = jsonObj.row;
           const column = jsonObj.column;
           const score = jsonObj.score;
-          let hit_miss_val = (matrix[row][column]).hit_miss;
+          let hit_miss_val = matrix[row][column].hit_miss;
           if (type == "DEPLOY") {
             const row = jsonObj.row;
             const column = jsonObj.column;
             refreshMatrix(row, column, "ours", payload);
           } else if (type == "MARK_SELF") {
             updateScore(score);
-            refreshMatrix(row, column, "hit_miss", getUpdatedCellValueForSelf(hit_miss_val,payload));
+            refreshMatrix(
+              row,
+              column,
+              "hit_miss",
+              getUpdatedCellValueForSelf(hit_miss_val, payload)
+            );
           } else if (type == "MARK_OPPONENT") {
             updateOpponentScore(score);
             refreshMatrix(
@@ -287,6 +308,11 @@ function BSLobby(props) {
         needRejectBtn={false}
         acceptLabel="OK"
         confirmFunc={() => {
+          const backdrops = document.querySelectorAll(".modal-backdrop");
+          // Iterate through the elements and remove the 'show' class if it exists
+          backdrops.forEach((backdrop) => {
+            backdrop.remove();
+          });
           playerUpdate("player", "role");
           resetAll();
           navigate("/home");

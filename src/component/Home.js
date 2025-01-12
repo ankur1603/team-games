@@ -9,9 +9,9 @@ import { BrowserRouter as Router,
 
 export default function Home() {
   const games = [
-    {'name': 'Battle Ships', url: '/battleships'},
-    {'name': 'A Game', url: '/agame'},
-    {'name': 'BGame', url: '/bgame'},
+    {'name': '🚢 Battleships 🚢', url: '/battleships'},
+    {'name': 'Tic Tac Toe (Coming Soon...)', url: '/agame'},
+    {'name': 'More ...', url: '/bgame'},
   ]
   return (
     <>

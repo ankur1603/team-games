@@ -10,18 +10,20 @@ export default function SubTeamPlayerList(props) {
             >
               <div className="componentWrapper">
                 <div className="header">{props.heading}</div>
+                <h4>
                 <p className="mb-0">
                   {props.players.map((player, index) => {
                     return (
-                      <h4><span
-                        key={index}
+                      <span
+                        key={`${player}_${index}`}
                         className="badge rounded-pill text-bg-primary mx-1"
                       >
                         {player}
-                      </span></h4>
+                      </span>
                     );
                   })}
                 </p>
+                </h4>
               </div>
             </div>
     </>
