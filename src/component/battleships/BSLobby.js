@@ -153,6 +153,9 @@ function BSLobby(props) {
               "hit_miss",
               getUpdatedCellValueForOpponent(hit_miss_val, payload)
             );
+            if(payload == 'hit') {
+              toast.error("Enemy missile hit confirmed! Evaluate the situation!");
+            }
           }
         }
       });
@@ -193,6 +196,9 @@ function BSLobby(props) {
               "hit_miss",
               getUpdatedCellValueForOpponent(hit_miss_val, payload)
             );
+            if(payload == 'hit') {
+              toast.error("Enemy missile hit confirmed! Evaluate the situation!");
+            }
           }
         }
       });

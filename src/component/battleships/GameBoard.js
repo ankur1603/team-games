@@ -74,7 +74,7 @@ const GameBoard = (props) => {
         );
       }
     } else {
-      toast.error("Maintain discipline; you’re not on the attack roster!");
+      toast.warning("Maintain discipline; you’re not on the attack roster!");
     }
     }
   };
@@ -109,8 +109,6 @@ const GameBoard = (props) => {
                   handleDoubleClick(rowIndex, colIndex, event)
                 }
                 style={{
-                  width: 40,
-                  height: 40,
                   border: "1px solid black",
                   backgroundColor: cell["ours"],
                   display: "flex",

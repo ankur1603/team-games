@@ -31,7 +31,7 @@ export default function SubTeams(props) {
       gameBoard.show();
     } else {
       strategicBoard.show();
-      toast.warning("Execute fleet deployment and arm for conflict");
+      toast.info("Execute fleet deployment and arm for conflict");
     }
   }, []);
 
