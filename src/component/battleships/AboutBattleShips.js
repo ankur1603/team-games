@@ -4,6 +4,39 @@ export default function AboutBattleShips(props) {
   return (
     <>
 <div className="card text-center mt-2 mb-2 container">
+<div className="text-body-secondary">
+  <div className="row">
+          <div className="col">
+
+            
+              <div className="componentWrapper">
+                <div className="header">Joined Players</div>
+                <p className="mb-0">
+                  {props.players.map((player, index) => {
+                    return (
+                      <span
+                        key={index}
+                        className="badge rounded-pill text-bg-primary mx-1"
+                      >
+                        {player}
+                      </span>
+                    );
+                  })}
+                </p>
+              </div>
+
+          </div>
+        </div>
+        {
+          (props.role == "admin") ?
+            <div className="row">
+            <div className="col">
+                <button type="button" className="btn btn-success" onClick={props.handleSplitTeam}>Split Team</button>
+              </div>
+            </div> : <></>
+          }
+        
+  </div>
   <div className="card-body row">
     <div className="text-start col-6">
     <p className="card-text">
@@ -71,39 +104,6 @@ export default function AboutBattleShips(props) {
     <img src="BattleShips1.jpeg" alt="BattleShips" className="img-fluid border border-success rounded"  style={{ height: "76vh" }} />
     </div>
     
-  </div>
-  <div className="text-body-secondary">
-  <div className="row">
-          <div className="col">
-
-            
-              <div className="componentWrapper">
-                <div className="header">Joined Players</div>
-                <p className="mb-0">
-                  {props.players.map((player, index) => {
-                    return (
-                      <span
-                        key={index}
-                        className="badge rounded-pill text-bg-primary mx-1"
-                      >
-                        {player}
-                      </span>
-                    );
-                  })}
-                </p>
-              </div>
-
-          </div>
-        </div>
-        {
-          (props.role == "admin") ?
-            <div className="row">
-            <div className="col">
-                <button type="button" className="btn btn-success" onClick={props.handleSplitTeam}>Split Team</button>
-              </div>
-            </div> : <></>
-          }
-        
   </div>
 </div>
     </>
