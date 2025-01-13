@@ -53,3 +53,12 @@ code {
 .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.3); /* Adjust the opacity as needed */
 }
+
+.accordion-button {
+  padding: 0.20rem 0.40rem;
+  font-size: 0.5rem; /* Reduce font size */
+}
+
+.accordion-body {
+  padding: 0.25rem; /* Adjust as needed */
+}

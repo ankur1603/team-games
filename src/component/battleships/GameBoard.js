@@ -4,6 +4,7 @@ import bsContext from "./context/BSContext";
 import playerContext from "../../context/PlayerContext";
 import GameLegend from "./GameLegend";
 import { toast } from 'react-toastify';
+import Collapisble from "../Collapisble";
 
 const GameBoard = (props) => {
   const battleshipContext = useContext(bsContext);
@@ -11,6 +12,8 @@ const GameBoard = (props) => {
   const gameStarted = battleshipContext.gameStarted;
   const size = battleshipContext.size;
   const turn = battleshipContext.turn;
+  const team1Players = battleshipContext.team1Players;
+  const team2Players = battleshipContext.team2Players;
   const client = props.client;
   const [selectedShipColor, setSelectedShipColor] = useState("#007bff");
 
@@ -82,6 +85,7 @@ const GameBoard = (props) => {
   return (
     <>
       <div>
+        <Collapisble id="team" title={`Marines`} players={(subTeamName=='team1'? team1Players: team2Players)}/>
         {gameStarted == true ? (
           <>
           <GameLegend />
