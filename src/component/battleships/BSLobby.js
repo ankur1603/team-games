@@ -309,6 +309,7 @@ function BSLobby(props) {
         <AboutBattleShips
           role={role}
           players={teamPlayers}
+          teamName={teamName}
           handleSplitTeam={handleSplitTeam}
         />
       )}

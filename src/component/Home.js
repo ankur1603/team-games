@@ -9,9 +9,8 @@ import { BrowserRouter as Router,
 
 export default function Home() {
   const games = [
-    {'name': '🚢 Battleships 🚢', url: '/battleships'},
-    {'name': 'Tic Tac Toe (Coming Soon...)', url: '/agame'},
-    {'name': 'More ...', url: '/bgame'},
+    {'name': '🚢 Battleships 🚢', url: '/battleships', thumbnail: 'BattleShips1.jpeg', category: 'Strategy' },
+    {'name': 'Tic Tac Toe (Coming Soon...)', url: '/tictactoe', thumbnail: 'ultimate-tic-tac-toe.jpeg', category: 'Strategy' },
   ]
   return (
     <>

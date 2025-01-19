@@ -8,7 +8,7 @@ export default function AboutBattleShips(props) {
           <div className="row">
             <div className="col-12">
               <div className="componentWrapper">
-                <div className="header">Joined Players</div>
+                <div className="header">{props.teamName} Players</div>
                 <p className="mb-0">
                   {props.players.map((player, index) => (
                     <span
